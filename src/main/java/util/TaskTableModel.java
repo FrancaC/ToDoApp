@@ -15,6 +15,7 @@ import model.Task;
  * @author clebe
  */
 public class TaskTableModel extends AbstractTableModel{
+    private Boolean[] editableCells ={true,true,true,true};
     String[] columns = {
         "Nome","Descrição","Prazo", "Tarefa Concluída","Editar", "Excluir" };
     List<Task> tasks = new ArrayList();
