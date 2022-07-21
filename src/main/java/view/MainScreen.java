@@ -358,6 +358,7 @@ public class MainScreen extends javax.swing.JFrame {
         Task task = taskModel.getTasks().get(rowIndex);
         switch (columnIndex) {
             case 3:
+                //aqui que eu vou mecher
                 taskController.update(task);
                 System.out.println("upload");
                 break;
