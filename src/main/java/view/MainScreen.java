@@ -12,10 +12,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import model.Project;
 import model.Task;
 import util.ButtonColumnCellRenderer;
 import util.DeadlineColumnRenderer;
+import util.EditTask;
 import util.TaskTableModel;
 
 /**
@@ -356,17 +358,35 @@ public class MainScreen extends javax.swing.JFrame {
         int rowIndex = jTableTasks.rowAtPoint(evt.getPoint());
         int columnIndex = jTableTasks.columnAtPoint(evt.getPoint());
         Task task = taskModel.getTasks().get(rowIndex);
+        int projectIndex = jListProjects.getSelectedIndex();
+        EditTask edtTask = new EditTask();
+        Project project = (Project) projectsModel.get(projectIndex);
         switch (columnIndex) {
+            case 0:
+                 taskController.editTask(task, JOptionPane.showInputDialog("Novo Nome da tarefa"),task.getDescription());
+                 LoadTasks(project.getId());
+                 System.out.println("editar nome");
+                 break;
+            case 1:
+                taskController.editTask(task, task.getName(),JOptionPane.showInputDialog("Nova descrição da tarefa"));
+                LoadTasks(project.getId()); 
+                System.out.println("editar descric");
+                break;
             case 3:
                 //aqui que eu vou mecher
                 taskController.update(task);
                 System.out.println("upload");
                 break;
+                
+            case 4:
+                edtTask.editTask();
+                taskController.editTask(task, edtTask.getTaskName(),edtTask.getTaskDescription());
+                LoadTasks(project.getId());
+                break;
             case 5:
-                int projectIndex = jListProjects.getSelectedIndex();
+              
                 taskModel.getTasks().remove(task);
                 taskController.removeById(task.getId());
-                Project project = (Project) projectsModel.get(projectIndex);
                 LoadTasks(project.getId());
                 System.out.println("delete");
                 break;
